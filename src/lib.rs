@@ -33,29 +33,24 @@ pub enum Error<E> {
     InvalidMode,
 }
 
-pub struct Bno055<I> {
-    i2c: I,
+pub struct Bno055<'a, I> {
+    i2c: &'a mut I,
     pub mode: BNO055OperationMode,
     use_default_addr: bool,
 }
 
-impl<I, E> Bno055<I>
+impl<'a, I, E> Bno055<'a, I>
 where
     I: WriteRead<Error = E> + Write<Error = E>,
 {
     /// Side-effect-free constructor.
     /// Nothing will be read or written before `init()` call.
-    pub fn new(i2c: I) -> Self {
+    pub fn new(i2c: &'a mut I) -> Self {
         Bno055 {
             i2c,
             mode: BNO055OperationMode::CONFIG_MODE,
             use_default_addr: true,
         }
-    }
-
-    /// Destroy driver instance, return I2C bus instance.
-    pub fn destroy(self) -> I {
-        self.i2c
     }
 
     /// Enables use of alternative I2C address `regs::BNO055_ALTERNATE_ADDR`.

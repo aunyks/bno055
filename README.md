@@ -35,38 +35,38 @@ The `serde` flag adds implementation of `Serialize` / `Deserialize` to `BNO055Ca
 
 1. Add dependency to `Cargo.toml`:
 
-    ```bash
-    cargo add bno055
-    ```
+   ```bash
+   cargo add bno055
+   ```
 
 2. Instantiate and init the device:
 
-    ```rust
-    // ... declare and configure your I2c and Delay implementations ...
-    // let i2c = ...;
-    // let delay = ...;
+   ```rust
+   // ... declare and configure your I2c and Delay implementations ...
+   // let i2c = ...;
+   // let delay = ...;
 
-    // Init BNO055 IMU
-    let imu = bno055::Bno055::new(i2c);
+   // Init BNO055 IMU
+   let imu = bno055::Bno055::new(i2c);
 
-    imu.init(&mut delay)?;
+   imu.init(&mut delay)?;
 
-    // Enable 9-degrees-of-freedom sensor fusion mode with fast magnetometer calibration
-    imu.set_mode(bno055::BNO055OperationMode::NDOF)?;
+   // Enable 9-degrees-of-freedom sensor fusion mode with fast magnetometer calibration
+   imu.set_mode(bno055::BNO055OperationMode::NDOF)?;
 
-    Ok(imu)
-    ```
+   Ok(imu)
+   ```
 
 3. Read orientation data, quaternion or euler angles (roll, pitch, yaw/heading):
 
-    ```rust
-    let quat: mint::Quaternion<f32> = imu.quaternion()?;
-    // or:
-    let euler: mint::EulerAngles<f32, ()> = imu.euler_angles()?;
-    ```
+   ```rust
+   let quat: mint::Quaternion<f32> = imu.quaternion()?;
+   // or:
+   let euler: mint::EulerAngles<f32, ()> = imu.euler_angles()?;
+   ```
 
-    >Due to the BNO055 firmware bugs, the Euler angles reading shouldn't be relied on.
-    I recommend to stick with quaternion readings and convert them to the Euler angles later if needed.
+   > Due to the BNO055 firmware bugs, the Euler angles reading shouldn't be relied on.
+   > I recommend to stick with quaternion readings and convert them to the Euler angles later if needed.
 
 ## Details and examples
 
@@ -221,15 +221,19 @@ What is done and tested and what is not yet:
 - [x] Alternative I2C address
 - [x] Take register pages into account
 - [x] Orientation data readout
-    - [x] Quaternions
-    - [x] Euler angles
+  - [x] Quaternions
+  - [x] Euler angles
 - [x] Raw sensor data readout
-    - [x] Raw accelerometer data readout
-    - [x] Raw gyroscope data readout
-    - [x] Raw magnetometer data readout
+  - [x] Raw accelerometer data readout
+  - [x] Raw gyroscope data readout
+  - [x] Raw magnetometer data readout
 - [x] Linear acceleration data readout
 - [x] Gravity vector data readout
 - [x] Temperature readout
 - [ ] Per-sensor configuration (when not in fusion mode)
 - [ ] Unit selection
 - [ ] Interrupts
+
+## License
+
+This project licensed under the MIT license (see LICENSE file within this repository). Copyright for portions of project [bno055](https://github.com/eupn/bno055) are held by eupn, 2019-2021 as part of project [bno055](https://github.com/eupn/bno055). All other copyright for project [bno055](https://github.com/eupn/bno055) are held by aunyks, 2022.
