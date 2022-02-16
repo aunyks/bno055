@@ -33,40 +33,48 @@ The `serde` flag adds implementation of `Serialize` / `Deserialize` to `BNO055Ca
 
 ## Usage
 
-1. Add dependency to `Cargo.toml`:
+1.  Add dependency to `Cargo.toml`:
 
-   ```bash
-   cargo add bno055
-   ```
+    ```toml
+    bno055 = { git = "https://github.com/aunyks/bno055.git" }
+    ```
 
-2. Instantiate and init the device:
+    and _optionally_ pin a specific commit
 
-   ```rust
-   // ... declare and configure your I2c and Delay implementations ...
-   // let i2c = ...;
-   // let delay = ...;
+    ````toml
+     bno055 = { git = "https://github.com/aunyks/bno055.git", rev = "b599b8bc173256258c7a221a6c8ded518c37b333" }
+    ```
 
-   // Init BNO055 IMU
-   let imu = bno055::Bno055::new(i2c);
+    ````
 
-   imu.init(&mut delay)?;
+2.  Instantiate and init the device:
 
-   // Enable 9-degrees-of-freedom sensor fusion mode with fast magnetometer calibration
-   imu.set_mode(bno055::BNO055OperationMode::NDOF)?;
+    ```rust
+    // ... declare and configure your I2c and Delay implementations ...
+    // let i2c = ...;
+    // let delay = ...;
 
-   Ok(imu)
-   ```
+    // Init BNO055 IMU
+    let imu = bno055::Bno055::new(i2c);
 
-3. Read orientation data, quaternion or euler angles (roll, pitch, yaw/heading):
+    imu.init(&mut delay)?;
 
-   ```rust
-   let quat: mint::Quaternion<f32> = imu.quaternion()?;
-   // or:
-   let euler: mint::EulerAngles<f32, ()> = imu.euler_angles()?;
-   ```
+    // Enable 9-degrees-of-freedom sensor fusion mode with fast magnetometer calibration
+    imu.set_mode(bno055::BNO055OperationMode::NDOF)?;
 
-   > Due to the BNO055 firmware bugs, the Euler angles reading shouldn't be relied on.
-   > I recommend to stick with quaternion readings and convert them to the Euler angles later if needed.
+    Ok(imu)
+    ```
+
+3.  Read orientation data, quaternion or euler angles (roll, pitch, yaw/heading):
+
+    ```rust
+    let quat: mint::Quaternion<f32> = imu.quaternion()?;
+    // or:
+    let euler: mint::EulerAngles<f32, ()> = imu.euler_angles()?;
+    ```
+
+    > Due to the BNO055 firmware bugs, the Euler angles reading shouldn't be relied on.
+    > I recommend to stick with quaternion readings and convert them to the Euler angles later if needed.
 
 ## Details and examples
 
@@ -236,4 +244,4 @@ What is done and tested and what is not yet:
 
 ## License
 
-This project licensed under the MIT license (see LICENSE file within this repository). Copyright for portions of project [bno055](https://github.com/eupn/bno055) are held by eupn, 2019-2021 as part of project [bno055](https://github.com/eupn/bno055). All other copyright for project [bno055](https://github.com/eupn/bno055) are held by aunyks, 2022.
+This project licensed under the MIT license (see LICENSE file within this repository). Copyright for portions of project bno055 are held by eupn, 2019-2021 as part of project [bno055](https://github.com/eupn/bno055). All other copyright for project bno055 are held by aunyks, 2022.
