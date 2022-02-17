@@ -41,11 +41,9 @@ The `serde` flag adds implementation of `Serialize` / `Deserialize` to `BNO055Ca
 
     and _optionally_ pin a specific commit
 
-    ````toml
+    ```toml
      bno055 = { git = "https://github.com/aunyks/bno055.git", rev = "b599b8bc173256258c7a221a6c8ded518c37b333" }
     ```
-
-    ````
 
 2.  Instantiate and init the device:
 
