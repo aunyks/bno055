@@ -24,7 +24,7 @@ mint = "^0.5.4"
 bitflags = "1"
 
 [dependencies.embedded-hal]
-version = "0.2.2"
+version = "0.2.6"
 features = ["unproven"]
 
 [features]
